@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>DocuShare | Secure Neon Vault</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>        
+        :root {
+            --color-primary: rgb(0, 242, 255); /* Cyan Neon para DocuShare */
+            --color-secondary: rgb(33, 37, 41); 
+            --color-accent: rgb(188, 19, 254); /* Púrpura para versiones */
+            --color-background-dark: rgb(10, 11, 16); 
+            --color-text-light: rgb(248, 249, 250); 
+        }
+
+        /* --- ANIMACIÓN PULSE NEON --- */
+        @keyframes neon-pulse {
+            0%, 100% { box-shadow: 0 0 10px var(--color-primary), inset 0 0 5px var(--color-primary); }
+            50% { box-shadow: 0 0 25px var(--color-primary), inset 0 0 10px var(--color-primary); }
+        }
+
+        body {
+            padding-top: 80px; 
+            background-color: var(--color-background-dark);
+            background-image: 
+                linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--color-text-light);
+            font-family: 'Segoe UI', sans-serif;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(22, 27, 34, 0.95) !important;
+            border-bottom: 2px solid var(--color-primary);
+            backdrop-filter: blur(10px);
+        }
+
+        .neon-text {
+            color: var(--color-primary);
+            text-shadow: 0 0 10px var(--color-primary);
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .main-content {
+            background: rgba(22, 27, 34, 0.8);
+            border: 1px solid var(--color-primary);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            animation: neon-pulse 4s infinite alternate;
+        }
+
+        /* --- UPLOAD ZONE --- */
+        .upload-zone {
+            border: 2px dashed var(--color-primary);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            background: rgba(0, 242, 255, 0.05);
+            margin-bottom: 30px;
+        }
+        .upload-zone:hover {
+            background: rgba(0, 242, 255, 0.1);
+            border-style: solid;
+            transform: scale(1.01);
+        }
+
+        /* --- FILE CARDS --- */
+        .file-card {
+            background: rgba(33, 37, 41, 0.9);
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            border-radius: 12px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .file-card:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.2);
+        }
+        .file-icon {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+        }
+        .version-badge {
+            background: var(--color-accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        /* --- CUSTOM BUTTONS --- */
+        .btn-neon {
+            background: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            transition: 0.3s;
+        }
+        .btn-neon:hover {
+            background: var(--color-primary);
+            color: black;
+            box-shadow: 0 0 15px var(--color-primary);
+        }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-background-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="#">
+                <i class="bi bi-shield-lock-fill neon-text"></i> DOCU<span class="neon-text">SHARE</span>
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <span class="badge border border-info text-info me-3 d-none d-md-block">
+                    <i class="bi bi-cloud-check"></i> Serverless Active
+                </span>
+                <div class="dropdown">
+                    <img src="https://i.pravatar.cc/40?img=11" class="rounded-circle border border-info" style="cursor:pointer" data-bs-toggle="dropdown">
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark border-info">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Seguridad</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="bi bi-box-arrow-right"></i> Salir</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-content mt-4 mb-5">
+        <header class="text-center mb-5">
+            <h1 class="display-4 fw-bold">Gestión de Documentos <span class="neon-text">Pro</span></h1>
+            <p class="lead text-info">Almacenamiento escalable con respaldo automático y versionado real.</p>
+        </header>
+
+        <div class="row mb-4 text-center">
+            <div class="col-md-4">
+                <div class="p-3 border border-secondary rounded">
+                    <h6 class="text-muted text-uppercase">Archivos Totales</h6>
+                    <h3 id="stat-total" class="neon-text">0</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 border border-secondary rounded">
+                    <h6 class="text-muted text-uppercase">Espacio Usado</h6>
+                    <h3 class="neon-text">0.4 <small class="fs-6">GB</small></h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-3 border border-secondary rounded">
+                    <h6 class="text-muted text-uppercase">Seguridad</h6>
+                    <h3 class="text-success"><i class="bi bi-shield-check"></i> AES-256</h3>
+                </div>
+            </div>
+        </div>
+
+        <section>
+            <div class="upload-zone" id="drop-zone">
+                <input type="file" id="file-input" hidden multiple>
+                <i class="bi bi-cloud-arrow-up display-2 neon-text"></i>
+                <h4 class="mt-3">Arrastra tus archivos aquí</h4>
+                <p class="text-muted">Soporta PDF, DOCX, Imágenes y Contratos Escaneados.</p>
+                <button class="btn btn-neon px-4 py-2" onclick="document.getElementById('file-input').click()">
+                    EXAMINAR DISPOSITIVO
+                </button>
+            </div>
+        </section>
+
+        <section class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h4 border-start border-info ps-3">Mis Documentos Recientes</h2>
+                <div class="input-group w-25 d-none d-md-flex">
+                    <span class="input-group-text bg-transparent border-info text-info"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control bg-transparent border-info text-white" placeholder="Buscar...">
+                </div>
+            </div>
+
+            <div class="row g-4" id="file-grid">
+                <div class="col-12 text-center py-5" id="empty-msg">
+                    <i class="bi bi-folder2-open display-1 text-secondary"></i>
+                    <p class="text-muted mt-2">No hay documentos cargados todavía.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="py-4 border-top border-info bg-dark">
+        <div class="container text-center">
+            <p class="mb-0 text-muted small">
+                © 2026 DocuShare Platform | <i class="bi bi-cpu"></i> Infraestructura Serverless AWS/Edge | 
+                <span class="text-info">Respaldo Automático habilitado</span>
+            </p>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="shareModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark border-info">
+                <div class="modal-header border-info">
+                    <h5 class="modal-title neon-text"><i class="bi bi-share"></i> Compartir Documento</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Genera un enlace seguro para compartir con otros usuarios.</p>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control bg-transparent border-info text-white" value="https://docushare.io/s/secure-772-link" readonly>
+                        <button class="btn btn-neon">Copiar</button>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" checked>
+                        <label class="form-check-label">Expirar enlace en 24 horas</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let dbFiles = JSON.parse(localStorage.getItem('docushare_db')) || [];
+
+        const fileInput = document.getElementById('file-input');
+        const dropZone = document.getElementById('drop-zone');
+        const fileGrid = document.getElementById('file-grid');
+        const emptyMsg = document.getElementById('empty-msg');
+        const statTotal = document.getElementById('stat-total');
+
+        // Inicializar
+        renderFiles();
+
+        // --- LÓGICA DE CARGA ---
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = "#bc13fe"; });
+        dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = "var(--color-primary)"; });
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    // Simulación de Versionado: Si el nombre existe, sube versión
+                    const existingIdx = dbFiles.findIndex(f => f.name === file.name);
+                    let version = 1;
+                    
+                    if(existingIdx !== -1) {
+                        version = dbFiles[existingIdx].version + 1;
+                        dbFiles.splice(existingIdx, 1); // Reemplazamos para mostrar el más nuevo
+                    }
+
+                    const newFile = {
+                        id: Date.now() + Math.random(),
+                        name: file.name,
+                        size: (file.size / 1024).toFixed(1) + ' KB',
+                        type: file.type,
+                        date: new Date().toLocaleDateString(),
+                        version: version,
+                        data: e.target.result // En producción esto se enviaría a S3/Firebase
+                    };
+
+                    dbFiles.unshift(newFile);
+                    saveData();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function saveData() {
+            localStorage.setItem('docushare_db', JSON.stringify(dbFiles));
+            renderFiles();
+            // Simulación de Respaldo Automático
+            console.log("Respaldo automático completado en servidor espejo.");
+        }
+
+        function renderFiles() {
+            fileGrid.innerHTML = '';
+            statTotal.innerText = dbFiles.length;
+
+            if (dbFiles.length === 0) {
+                fileGrid.appendChild(emptyMsg);
+                return;
+            }
+
+            dbFiles.forEach(file => {
+                const card = document.createElement('div');
+                card.className = 'col-md-4 col-lg-3';
+                const icon = file.type.includes('pdf') ? 'file-pdf' : 'file-earmark-text';
+                
+                card.innerHTML = `
+                    <div class="file-card p-3">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <i class="bi bi-${icon} file-icon"></i>
+                            <span class="version-badge">v${file.version}.0</span>
+                        </div>
+                        <h6 class="text-truncate" title="${file.name}">${file.name}</h6>
+                        <p class="small text-muted mb-3">${file.date} | ${file.size}</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-neon flex-grow-1" onclick="viewFile('${file.id}')">
+                                <i class="bi bi-eye"></i> Abrir
+                            </button>
+                            <button class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#shareModal">
+                                <i class="bi bi-share"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteFile('${file.id}')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                fileGrid.appendChild(card);
+            });
+        }
+
+        function deleteFile(id) {
+            if(confirm('¿Eliminar documento y sus versiones respaldadas?')) {
+                dbFiles = dbFiles.filter(f => f.id != id);
+                saveData();
+            }
+        }
+
+        function viewFile(id) {
+            const file = dbFiles.find(f => f.id == id);
+            // Simulación de consulta
+            const newWindow = window.open();
+            newWindow.document.write(`<iframe src="${file.data}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+        }
+    </script>
+</body>
+</html>
